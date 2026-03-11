@@ -2,10 +2,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { HfInference } from '@huggingface/inference';
 import Database from 'better-sqlite3';
 import path from 'path';
+import os from 'os';
 
 export const runtime = 'nodejs';
 
-const DB_PATH = path.join(process.cwd(), 'data.db');
+const DB_PATH = process.env.NODE_ENV === 'production' 
+    ? path.join(os.tmpdir(), 'data.db') 
+    : path.join(process.cwd(), 'data.db');
 
 export async function POST(req: NextRequest) {
     try {

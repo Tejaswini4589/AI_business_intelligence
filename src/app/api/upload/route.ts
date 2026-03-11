@@ -3,11 +3,14 @@ import Database from 'better-sqlite3';
 import { parse } from 'csv-parse/sync'; // using sync parser for simplicity since we convert to buffer
 import fs from 'fs';
 import path from 'path';
+import os from 'os';
 
 export const runtime = 'nodejs';
 
 // Use a persistent SQLite file in development
-const DB_PATH = path.join(process.cwd(), 'data.db');
+const DB_PATH = process.env.NODE_ENV === 'production' 
+    ? path.join(os.tmpdir(), 'data.db') 
+    : path.join(process.cwd(), 'data.db');
 
 export async function POST(request: NextRequest) {
     try {
