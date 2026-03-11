@@ -81,7 +81,8 @@ export default function DynamicChart({ data, config }: DynamicChartProps) {
                             fill={mainColor}
                             dataKey={yAxisKey}
                             nameKey={xAxisKey}
-                            label={({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+                            label={(props: any) => {
+                                const { cx, cy, midAngle, innerRadius, outerRadius, percent, index } = props;
                                 const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
                                 const x = cx + radius * Math.cos(-midAngle * Math.PI / 180);
                                 const y = cy + radius * Math.sin(-midAngle * Math.PI / 180);
